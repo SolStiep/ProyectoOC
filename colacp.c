@@ -3,9 +3,7 @@
 #include "constantes.h"
 
 TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
-    //Inicializo la cola y reservo lugar en memoria
     TColaCP cola;
-    //cola=(struct cola_con_prioridad * )malloc(sizeof(struct cola_con_prioridad));
     cola=(TColaCP)malloc(sizeof(struct cola_con_prioridad));
     cola->cantidad_elementos=0;
     cola->raiz=NULL;
@@ -16,30 +14,48 @@ TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
 
 int cp_insertar(TColaCP cola,TEntrada entr){
     int posicion,i;
-    TNodo nodo;
-    //Compruebo que la cola este inicializada
-    if(cola==NULL||entr=NULL){
+    TNodo padreNuevo;
+    if(cola==NULL){
         exit(CCP_NO_INI);
     }
     else{
-        TNodo nuevoNodo=(struct TNodo *)malloc(sizeof(struct nodo));
+        TNodo nuevoNodo=(TNodo)malloc(sizeof(struct nodo));
         nuevoNodo->entrada=entr;
-        // consigo el padre del nuevo nodo
-        posicion=(cola->cantidad_elementos)/2;
-        nodo=cola->raiz;
-        if(posicion%2==0){
-            for(i=0;i<posicion;i++){
-                if(i%2!=0){
-                    nodo=nodo.hijo_izquierdo;
-                }
-                else{
-
-                }
+        if(cola->cantidad_elementos==0){
+            nuevoNodo->padre=NULL;
+            nuevoNodo->hijo_derecho=NULL;
+            nuevoNodo->hijo_izquierdo=NULL;
+            cola->raiz=nuevoNodo;
+        }
+        else{
+            padreNuevo=buscar_nodo_insertar(cola);
+            nuevoNodo->padre=padreNuevo;
+            if(cola->cantidad_elementos%2!=0){
+                padreNuevo->hijo_derecho=nuevoNodo;
             }
+            else{
+                padreNuevo->hijo_izquierdo=nuevoNodo;
+            }
+            burbujeo(nuevoNodo);
         }
     }
 }
 
+private TNodo buscar_nodo_insertar(TColaCP cola){
+    int posicionPadre;
+    if(cola->cantidad_elementos%2==0){
+        posicionPadre=(cola->cantidad_elementos%2)%2;
+    }
+    else{
+        posicionPadre=((cola->cantidad_elementos%2)+1)%2;
+    }
+    return buscarPadre(cola,posicionPadre);
+}
+
+private TNodo buscarPadre(TColaCP cola,int posicionPadre){
+    int aux=1;
+    while(aux)
+}
 TEntrada cp_eliminar(TColaCP cola){
 
 }

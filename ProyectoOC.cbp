@@ -33,11 +33,14 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="colacp.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="constantes.h" />
 		<Unit filename="include/colacp.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="src/colacp.cpp" />
 		<Extensions>
 			<code_completion />
 			<debugger />
