@@ -4,6 +4,5 @@
 int main()
 {
     printf("Hello world!\n");
-    //hosihgd
     return 0;
 }
