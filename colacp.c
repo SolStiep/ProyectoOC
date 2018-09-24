@@ -11,9 +11,9 @@ TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
     return cola;
 }
 
-private TNodo buscar_nodo_insertar(TColaCP cola,TNodo r);
+TNodo buscar_nodo_insertar(TColaCP cola,TNodo r); //aca habia un private
 
-private void burbujeo(TNodo nodoAcomodar);
+void burbujeo(TNodo nodoAcomodar);  //aca habia un private
 
 int cp_insertar(TColaCP cola,TEntrada entr){
     TNodo padreNuevo;
@@ -43,7 +43,7 @@ int cp_insertar(TColaCP cola,TEntrada entr){
     }
 }
 
-private TNodo buscar_nodo_insertar(TColaCP cola,TNodo r){
+ TNodo buscar_nodo_insertar(TColaCP cola,TNodo r){  //aca habia un private
     TNodo retorno;
     if(r->hijo_derecho==NULL||r->hijo_izquierdo==NULL){
         retorno=r;
@@ -64,9 +64,9 @@ private TNodo buscar_nodo_insertar(TColaCP cola,TNodo r){
     padrePadre : es el nuevo padre del padre del nodo a acomodar(el mismo nodo a acomodar)
 
 */
-private void burbujeo(TNodo nodoAcomodar){
+ void burbujeo(TNodo nodoAcomodar){ //aca habia un private
     TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre;
-    while(f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada==1)){
+    while( (nodoAcomodar->entrada,nodoAcomodar->padre->entrada==1)){ //aca habia una f despues del while
         padre=nodoAcomodar->padre;
         hijoDerechoPadre=nodoAcomodar->hijo_derecho;
         hijoIzquierdoPadre=nodoAcomodar->hijo_izquierdo;

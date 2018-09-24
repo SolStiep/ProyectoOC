@@ -1,3 +1,4 @@
+//cual es la diferencia de declarar las constantes con #define que con int const ?
 
 int FALSE=0;
 int TRUE=1;

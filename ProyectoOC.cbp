@@ -38,6 +38,10 @@
 		</Unit>
 		<Unit filename="constantes.h" />
 		<Unit filename="include/colacp.h" />
+		<Unit filename="include/lista.h" />
+		<Unit filename="lista.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

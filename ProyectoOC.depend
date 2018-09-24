@@ -3,3 +3,23 @@
 	<stdio.h>
 	<stdlib.h>
 
+1537741298 source:/home/alumno/Documentos/ProyectoOC/colacp.c
+	"colacp.h"
+	<stdlib.h>
+	"constantes.h"
+
+1537459294 /home/alumno/Documentos/ProyectoOC/include/colacp.h
+
+1537740898 /home/alumno/Documentos/ProyectoOC/constantes.h
+
+1537745047 source:/home/alumno/Documentos/ProyectoOC/main.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+
+1537749089 source:/home/alumno/Documentos/ProyectoOC/lista.c
+	"lista.h"
+	<stdlib.h>
+
+1537749089 /home/alumno/Documentos/ProyectoOC/include/lista.h
+
