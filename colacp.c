@@ -18,6 +18,7 @@ void burbujeo(TNodo nodoAcomodar);  //aca habia un private
 int cp_insertar(TColaCP cola,TEntrada entr){
     TNodo padreNuevo;
     if(cola==NULL){
+        return 0;
         exit(CCP_NO_INI);
     }
     else{
@@ -39,6 +40,7 @@ int cp_insertar(TColaCP cola,TEntrada entr){
                 padreNuevo->hijo_derecho=nuevoNodo;
             }
            burbujeo(nuevoNodo);
+           return 1;
         }
     }
 }
@@ -91,6 +93,32 @@ int cp_insertar(TColaCP cola,TEntrada entr){
 
 
 TEntrada cp_eliminar(TColaCP cola){
+    TEntrada eliminar;
+    TNodo raizEliminar;
+    if(cola==NULL){
+        return 0;
+        exit(CCP_NO_INI);
+    }
+    else{
+        if(cola->cantidad_elementos==0){
+            return ELE_NULO;
+        }
+        else{
+
+            eliminar=cola->raiz->entrada;
+            free(TNodo);
+            if(cola->f(cola->raiz.hijo_derecho,cola->raiz.hijo_izquierdo)==1){
+                acomodar(cola,cola->raiz.hijo_derecho);
+            }
+            else{
+                acomodar(cola,cola->raiz.hijo_izquierdo);
+            }
+        }
+    }
+
+}
+
+void acomodar(TColaCP cola, TNodo raiz){
 
 }
 
