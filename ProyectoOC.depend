@@ -24,7 +24,7 @@
 1537875077 /home/alumno/Documentos/ProyectoOC/include/lista.h
 	"constantes.h"
 
-1537877048 source:/home/alumno/ProyectoOC/lista.c
+1537915142 source:/home/alumno/ProyectoOC/lista.c
 	"lista.h"
 	<stdlib.h>
 
@@ -45,6 +45,6 @@
 
 1537877048 /home/alumno/ProyectoOC/constantes.h
 
-1537877048 /home/alumno/ProyectoOC/lista.h
+1537915142 /home/alumno/ProyectoOC/lista.h
 	"constantes.h"
 
