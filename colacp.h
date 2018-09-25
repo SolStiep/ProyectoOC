@@ -1,5 +1,6 @@
 #ifndef COLACP_H_INCLUDED
 #define COLACP_H_INCLUDED
+#include "constantes.h"
 
 typedef void *TClave;
 typedef void *TValor;
@@ -24,3 +25,4 @@ typedef struct cola_con_prioridad{
 
 
 #endif // COLACP_H_INCLUDED
+

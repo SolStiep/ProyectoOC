@@ -1,7 +1,6 @@
 #include "colacp.h"
 #include <stdlib.h>
-#include "constantes.h"
-/*
+
 
 TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
     TColaCP cola;
@@ -12,18 +11,24 @@ TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
     return cola;
 }
 
-TNodo buscar_nodo_insertar(TColaCP cola,TNodo r); //aca habia un private
+static TNodo buscar_nodo_insertar(TColaCP cola,TNodo r);
 
-void burbujeo(TNodo nodoAcomodar);  //aca habia un private
+static void burbujeo(TNodo nodoAcomodar);
 
 int cp_insertar(TColaCP cola,TEntrada entr){
     TNodo padreNuevo;
+    int retorno;
     if(cola==NULL){
-        return 0;
         exit(CCP_NO_INI);
     }
     else{
         TNodo nuevoNodo=(TNodo)malloc(sizeof(struct nodo));
+        if(nuevoNodo==NULL){
+            retorno=FALSE;
+        }
+        else{
+            retorno =TRUE;
+        }
         nuevoNodo->entrada=entr;
         if(cola->cantidad_elementos==0){
             nuevoNodo->padre=NULL;
@@ -41,13 +46,13 @@ int cp_insertar(TColaCP cola,TEntrada entr){
                 padreNuevo->hijo_derecho=nuevoNodo;
             }
            burbujeo(nuevoNodo);
-           return 1;
         }
     }
+    return retorno;
 }
 
- TNodo buscar_nodo_insertar(TColaCP cola,TNodo r){  //aca habia un private
-    TNodo retorno;
+ static TNodo buscar_nodo_insertar(TColaCP cola,TNodo r){
+    TNodo retorno=NULL;
     if(r->hijo_derecho==NULL||r->hijo_izquierdo==NULL){
         retorno=r;
     }
@@ -58,16 +63,16 @@ int cp_insertar(TColaCP cola,TEntrada entr){
     return retorno;
 }
 
-
+/*
     hijoIzquierdoPadre : es el nuevo hijo izquierdo del padre del nodo a acomodar
     hijoDerechoPadre : es el nuevo hijo derecho del padre del nodo a acomodar
     hijoDerechoAcomodar : es el nuevo hijo derecho del nodo a acomodar
     hijoIzquierdoAcomodar : es el nuevo hijo izquierdo del nodo a acomodar
     padreAcomodar :  es el nuevo padre del nodo a acomdar
     padrePadre : es el nuevo padre del padre del nodo a acomodar(el mismo nodo a acomodar)
+*/
 
-
- void burbujeo(TNodo nodoAcomodar){ //aca habia un private
+ static void burbujeo(TNodo nodoAcomodar){
     TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre;
     while( (nodoAcomodar->entrada,nodoAcomodar->padre->entrada==1)){ //aca habia una f despues del while
         padre=nodoAcomodar->padre;
@@ -94,41 +99,51 @@ int cp_insertar(TColaCP cola,TEntrada entr){
 
 
 TEntrada cp_eliminar(TColaCP cola){
-    TEntrada eliminar;
-    TNodo raizEliminar;
+    TEntrada eliminar=ELE_NULO;
+    TNodo nuevaRaiz;
     if(cola==NULL){
-        return 0;
         exit(CCP_NO_INI);
     }
     else{
-        if(cola->cantidad_elementos==0){
-            return ELE_NULO;
-        }
-        else{
-
+        if(cola->cantidad_elementos!=0){
+            nuevaRaiz=ultimoNodo(cola,cola->raiz);
             eliminar=cola->raiz->entrada;
-            free(TNodo);
-            if(cola->f(cola->raiz.hijo_derecho,cola->raiz.hijo_izquierdo)==1){
-                acomodar(cola,cola->raiz.hijo_derecho);
-            }
-            else{
-                acomodar(cola,cola->raiz.hijo_izquierdo);
-            }
+            free(cola->raiz);
+            acomodar(cola);
         }
     }
-
+    return eliminar;
 }
 
-void acomodar(TColaCP cola, TNodo raiz){
+static TNodo ultimoNodo(TColaCP cola,TNodo r){
+    TNodo retorno=NULL;
+    if(r->hijo_derecho==NULL&&r->hijo_izquierdo==NULL){
+        retorno=r;
+    }
+    else{
+        if(r->hijo_derecho!=NULL)
+            ultimoNodo(cola,r->hijo_derecho);
+        if(r->hijo_izquierdo!=NULL)
+            ultimoNodo(cola,r->hijo_izquierdo);
+    }
+    return retorno;
+}
+
+
+void acomodar(TColaCP cola){
 
 }
 
 int cp_size(TColaCP cola){
+    if(cola==NULL){
+        exit(CCP_NO_INI);
+    }
     return cola->cantidad_elementos;
 }
 
+//No hay caso en el que pueda fallar por eso retorna siempre true
 int cp_destruir(TColaCP cola){
+
 
 }
 
-*/

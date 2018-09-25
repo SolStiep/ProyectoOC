@@ -36,12 +36,12 @@
 		<Unit filename="colacp.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="colacp.h" />
 		<Unit filename="constantes.h" />
-		<Unit filename="include/colacp.h" />
-		<Unit filename="include/lista.h" />
 		<Unit filename="lista.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="lista.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
