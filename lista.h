@@ -21,7 +21,7 @@ int l_insertar(TLista *lista , TPosicion pos ,TElemento elem);
 
 int l_eliminar(TLista *lista , TPosicion pos);
 
-TPosicion l_primera(TLista lista);  //porque antes pasabamos la lista como puntero y ahora no?
+TPosicion l_primera(TLista lista);
 
 TPosicion l_ultima(TLista lista);
 
