@@ -1,6 +1,7 @@
 #include "colacp.h"
 #include <stdlib.h>
 #include "constantes.h"
+/*
 
 TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
     TColaCP cola;
@@ -57,7 +58,7 @@ int cp_insertar(TColaCP cola,TEntrada entr){
     return retorno;
 }
 
-/*
+
     hijoIzquierdoPadre : es el nuevo hijo izquierdo del padre del nodo a acomodar
     hijoDerechoPadre : es el nuevo hijo derecho del padre del nodo a acomodar
     hijoDerechoAcomodar : es el nuevo hijo derecho del nodo a acomodar
@@ -65,7 +66,7 @@ int cp_insertar(TColaCP cola,TEntrada entr){
     padreAcomodar :  es el nuevo padre del nodo a acomdar
     padrePadre : es el nuevo padre del padre del nodo a acomodar(el mismo nodo a acomodar)
 
-*/
+
  void burbujeo(TNodo nodoAcomodar){ //aca habia un private
     TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre;
     while( (nodoAcomodar->entrada,nodoAcomodar->padre->entrada==1)){ //aca habia una f despues del while
@@ -129,3 +130,5 @@ int cp_size(TColaCP cola){
 int cp_destruir(TColaCP cola){
 
 }
+
+*/

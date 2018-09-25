@@ -1,17 +1,27 @@
 #include "lista.h"
-//no me deja incluir las constantes
 #include <stdlib.h>
 
 TLista crear_lista(){
-    TLista L;
-    L = (TLista) malloc(sizeof(struct celda));
-    L->celda_anterior = NULL;
-    L->celda_siguiente = NULL;
-    L->elemento = NULL;
+    TLista L = POS_NULA;
     return L;
 }
 
 int l_insertar(TLista *lista , TPosicion pos ,TElemento elem){
+    TPosicion celda = (TPosicion) malloc(sizeof(struct celda));
+    celda->elemento = elem;
+    celda->celda_anterior = POS_NULA;
+    celda->celda_siguiente = POS_NULA;
+
+    if(celda == NULL)
+        return FALSE;
+
+    if (*lista == POS_NULA){
+        *lista = celda;
+    }
+    else{
+
+    }
+
 
 }
 

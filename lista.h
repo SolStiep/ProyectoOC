@@ -1,6 +1,10 @@
+#ifndef LISTA_H_INCLUDED
+#define LISTA_H_INCLUDED
+
 #include "constantes.h"
+
 typedef void* TElemento;
-//porque declaramos a todo de tipo puntero?
+
 
 typedef struct celda{
     TElemento elemento;
@@ -32,3 +36,6 @@ int l_size(TLista lista);
 int l_destruir(TLista *lista);
 
 
+
+
+#endif // LISTA_H_INCLUDED
