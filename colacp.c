@@ -18,13 +18,13 @@ static void burbujeo(TColaCP cola,TNodo nodoAcomodar);
 int cp_insertar(TColaCP cola,TEntrada entr){
     TNodo padreNuevo;
     int retorno= TRUE;
-    if(cola==NULL){
+    if(cola==NULL){ //inicialmente una variable apunta a una direccion basura, no debería verificarse eso en lugar de NULL? -f
         exit(CCP_NO_INI);
     }
     else{
         TNodo nuevoNodo=(TNodo)malloc(sizeof(struct nodo));
         if(nuevoNodo==NULL){
-            retorno=FALSE;
+            retorno=FALSE; //una vez que retorno es falso no deberia salir del metodo? -f
         }
         else{
             nuevoNodo->entrada=entr;
@@ -50,6 +50,7 @@ int cp_insertar(TColaCP cola,TEntrada entr){
     return retorno;
 }
 
+//esta mal, corregir
  static TNodo buscar_nodo_insertar(TColaCP cola,TNodo r){
     TNodo retorno=NULL;
     if(r->hijo_derecho==NULL||r->hijo_izquierdo==NULL){
@@ -73,12 +74,12 @@ int cp_insertar(TColaCP cola,TEntrada entr){
 
  static void burbujeo(TColaCP cola,TNodo nodoAcomodar){
     TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre;
-    while((cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
-        padre=nodoAcomodar->padre;
+    while((cola->f(nodoAcomodar->entrada->clave,nodoAcomodar->padre->entrada->clave))== -1){ //corregido: se estaba comparando prioridad de entradas.
+        padre=nodoAcomodar->padre;                                                           //Ademas, se estaba igualando a 1 y es a -1. -f
         hijoDerechoPadre=nodoAcomodar->hijo_derecho;
         hijoIzquierdoPadre=nodoAcomodar->hijo_izquierdo;
         padrePadre=nodoAcomodar;
-        if(padre->hijo_derecho==nodoAcomodar){
+        if(padre->hijo_derecho==nodoAcomodar){ //y que pasa si no tiene hijos?
             hijoDerechoAcomodar=padre;
             hijoIzquierdoAcomodar=padre->hijo_izquierdo;
         }
@@ -113,7 +114,7 @@ TEntrada cp_eliminar(TColaCP cola){
             nuevaRaiz->hijo_derecho=cola->raiz->hijo_derecho;
             nuevaRaiz->hijo_izquierdo=cola->raiz->hijo_izquierdo;
             free(cola->raiz);
-            cola->raiz=nuevaRaiz;
+            cola->raiz=nuevaRaiz;  //y si la cola tenia un solo elemento? -f
             cola->cantidad_elementos=cola->cantidad_elementos-1;
             acomodar(cola,nuevaRaiz);
         }
