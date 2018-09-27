@@ -48,3 +48,17 @@
 1537915142 /home/alumno/ProyectoOC/lista.h
 	"constantes.h"
 
+1538047626 source:/home/alumno/ProyectoOC/ProyectoOC/lista.c
+	"lista.h"
+	<stdlib.h>
+
+1538047626 /home/alumno/ProyectoOC/ProyectoOC/lista.h
+	"constantes.h"
+
+1538047626 /home/alumno/ProyectoOC/ProyectoOC/constantes.h
+
+1538047626 source:/home/alumno/ProyectoOC/ProyectoOC/main.c
+	<stdio.h>
+	<stdlib.h>
+	"lista.h"
+
