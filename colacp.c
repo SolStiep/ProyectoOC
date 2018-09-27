@@ -82,7 +82,7 @@ TNodo buscar_nodo(TColaCP cola,int cant){
 
  void burbujeo(TColaCP cola,TNodo nodoAcomodar){
     TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre;
-    while((cola->f(nodoAcomodar->entrada->clave,nodoAcomodar->padre->entrada->clave))==1){
+    while((cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
         padre=nodoAcomodar->padre;
         hijoDerechoPadre=nodoAcomodar->hijo_derecho;
         hijoIzquierdoPadre=nodoAcomodar->hijo_izquierdo;
@@ -105,8 +105,7 @@ TNodo buscar_nodo(TColaCP cola,int cant){
     }
 }
 
-TNodo ultimoNodo(TNodo r);
-void acomodar(TColaCP cola,TNodo r);
+void acomodar(TColaCP cola);
 
 TEntrada cp_eliminar(TColaCP cola){
     TEntrada eliminar=ELE_NULO;
@@ -130,7 +129,7 @@ TEntrada cp_eliminar(TColaCP cola){
                 free(cola->raiz);
                 cola->raiz=nuevaRaiz;
                 cola->cantidad_elementos=cola->cantidad_elementos-1;
-                acomodar(cola,nuevaRaiz);
+                acomodar(cola);
             }
         }
     }
@@ -143,13 +142,13 @@ void intercambiar(TNodo hijo,TNodo padre);
 void acomodar(TColaCP cola){
     TNodo mayor,r=cola->raiz,HI=r->hijo_izquierdo,HD=r->hijo_derecho;
     while(HD!=NULL&&HI!=NULL){
-        if(cola->f(HI->entrada->clave,HD->entrada->clave)==1){
+        if(cola->f(HI->entrada,HD->entrada)==1){
             mayor=HI;
         }
         else{
             mayor=HD;
         }
-        if(cola->f(r->entrada->clave,mayor->entrada->clave)==-1){
+        if(cola->f(r->entrada,mayor->entrada)==-1){
             intercambiar(mayor,r);
         }
     }
@@ -162,7 +161,7 @@ void acomodar(TColaCP cola){
 }
 
 void intercambiar(TNodo hijo,TNodo padre){
-    TEntrada auxHijo=hijo->entrada,
+    TEntrada auxHijo=hijo->entrada;
     hijo->entrada=padre->entrada;
     padre->entrada=auxHijo;
 
