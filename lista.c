@@ -7,8 +7,11 @@ TLista crear_lista(){
 }
 
 int l_insertar(TLista *lista , TPosicion pos ,TElemento elem){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     TPosicion celda = (TPosicion) malloc(sizeof(struct celda));
-    celda->elemento = elem;
+    celda->elemento = elem; //no debo hacer un malloc() para el elemento?
     celda->celda_anterior = POS_NULA;
     celda->celda_siguiente = POS_NULA;
 
@@ -19,11 +22,11 @@ int l_insertar(TLista *lista , TPosicion pos ,TElemento elem){
         *lista = celda;
     }
     else{
-        if (*lista == pos){ //estamos insertando en la primer posicion (por lo tanto hace falta que ahora lista apunte a celda)
+        if (*lista == pos || pos==POS_NULA){ //estamos insertando en la primer posicion (por lo tanto hace falta que ahora lista apunte a celda)
             pos->celda_anterior = celda;
             *lista = celda;
         }
-        else{
+        else{ //estamos insertando en una pos intermedia o al final
             if (pos->celda_anterior!=POS_NULA){
                 pos->celda_anterior->celda_siguiente = celda;
                 celda->celda_anterior = pos->celda_anterior;
@@ -39,13 +42,15 @@ int l_insertar(TLista *lista , TPosicion pos ,TElemento elem){
 }
 
 int l_eliminar(TLista *lista , TPosicion pos){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     if (*lista == POS_NULA || pos == POS_NULA) //en caso de que la lista este vacia o la pos sea invalida
         return FALSE;
 
     if(*lista == pos){ //en caso de haber eliminado el primer elemento
         *lista = pos->celda_siguiente;
         pos->celda_siguiente->celda_anterior = POS_NULA;
-        pos->celda_siguiente = POS_NULA; //hace falta?
     }
     else{  //en caso de haber eliminado un elemento intermedio o el ultimo.
 
@@ -56,15 +61,14 @@ int l_eliminar(TLista *lista , TPosicion pos){
             pos->celda_siguiente->celda_anterior = pos->celda_anterior;
         }
 
-        pos->celda_anterior = POS_NULA; //hace falta?
-        pos->celda_siguiente = POS_NULA; //hace falta?
     }
-
+    pos->celda_anterior = POS_NULA;
+    pos->celda_siguiente = POS_NULA;
+    pos->elemento = ELE_NULO;
     free(pos);
-    pos = POS_NULA; //asi el puntero no queda apuntando a la nada.
 
     return TRUE;
-    }
+}
 
 TPosicion l_primera(TLista lista){
     return lista;
@@ -108,15 +112,20 @@ int l_size(TLista lista){
     return i;
 }
 
-int l_destruir(TLista *lista){
+int l_destruir(TLista *lista){ //invalidar los atributos
 
-    if (*lista == POS_NULA)
+    if (lista == POS_NULA)
         return FALSE;
 
     TPosicion pos = *lista;
+    TPosicion sgte;
     while(pos!=POS_NULA){
+        sgte = pos->celda_siguiente;
+        pos->elemento = ELE_NULO;
+        pos->celda_anterior = POS_NULA;
+        pos->celda_siguiente = POS_NULA;
         free(pos);
-        pos = pos->celda_siguiente;
+        pos = sgte;
     }
 
     return TRUE;

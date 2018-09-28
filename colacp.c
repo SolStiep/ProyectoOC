@@ -1,6 +1,11 @@
 #include "colacp.h"
 #include <stdlib.h>
-
+//estas son las declaraciones de las funciones privadas auxiliares
+void intercambiar(TNodo hijo,TNodo padre);
+void burbujeo(TColaCP cola,TNodo nodoAcomodar);
+void acomodar(TColaCP cola);
+TNodo buscar_nodo(TColaCP cola,int cant);
+void cp_destruirAux(TNodo r);
 
 TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
     TColaCP cola;
@@ -11,8 +16,7 @@ TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
     return cola;
 }
 
-TNodo buscar_nodo(TColaCP cola,int cant);
-void burbujeo(TColaCP cola,TNodo nodoAcomodar);
+
 
 int cp_insertar(TColaCP cola,TEntrada entr){
     TNodo padreNuevo;
@@ -80,12 +84,11 @@ TNodo buscar_nodo(TColaCP cola,int cant){
     padrePadre : es el nuevo padre del padre del nodo a acomodar(el mismo nodo a acomodar)
 */
 
+/* sol, esto aca comentado es el codigo que estaba adentro del while del burbujeo, si preferis como quedo ahora borra todo este comentario.
 
-//podrían simplemente intercambiar las entradas?
- void burbujeo(TColaCP cola,TNodo nodoAcomodar){
-    TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre;
-    while((cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
-        padre=nodoAcomodar->padre;
+    TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre; //estas son las variables arriba del while
+
+     padre=nodoAcomodar->padre;
         hijoDerechoPadre=nodoAcomodar->hijo_derecho;
         hijoIzquierdoPadre=nodoAcomodar->hijo_izquierdo;
         padrePadre=nodoAcomodar;
@@ -104,10 +107,23 @@ TNodo buscar_nodo(TColaCP cola,int cant){
         padre->hijo_derecho=hijoDerechoPadre;
         padre->padre=padrePadre;
         padre->hijo_izquierdo=hijoIzquierdoPadre;
+
+*/
+
+void burbujeo(TColaCP cola,TNodo nodoAcomodar){
+
+    while((cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
+        intercambiar(nodoAcomodar,nodoAcomodar->padre);
     }
 }
 
-void acomodar(TColaCP cola);
+void intercambiar(TNodo hijo,TNodo padre){
+    TEntrada auxHijo=hijo->entrada;
+    hijo->entrada=padre->entrada;
+    padre->entrada=auxHijo;
+}
+
+
 
 TEntrada cp_eliminar(TColaCP cola){
     TEntrada eliminar=ELE_NULO;
@@ -125,10 +141,16 @@ TEntrada cp_eliminar(TColaCP cola){
             else{
                 nuevaRaiz=buscar_nodo(cola,cola->cantidad_elementos);
                 eliminar=cola->raiz->entrada;
+
                 nuevaRaiz->padre=NULL;
                 nuevaRaiz->hijo_derecho=cola->raiz->hijo_derecho;
                 nuevaRaiz->hijo_izquierdo=cola->raiz->hijo_izquierdo;
+
+                cola->raiz->entrada = NULL;
+                cola->raiz->hijo_derecho = NULL;
+                cola->raiz->hijo_izquierdo = NULL;
                 free(cola->raiz);
+
                 cola->raiz=nuevaRaiz;
                 cola->cantidad_elementos=cola->cantidad_elementos-1;
                 acomodar(cola);
@@ -139,10 +161,11 @@ TEntrada cp_eliminar(TColaCP cola){
 }
 
 
-void intercambiar(TNodo hijo,TNodo padre);
+
 
 void acomodar(TColaCP cola){
-    TNodo mayor,r=cola->raiz,HI=r->hijo_izquierdo,HD=r->hijo_derecho;
+    TNodo mayor , r=cola->raiz , HI=r->hijo_izquierdo , HD=r->hijo_derecho;
+
     while(HD!=NULL&&HI!=NULL){
         if(cola->f(HI->entrada,HD->entrada)==1){
             mayor=HI;
@@ -150,24 +173,27 @@ void acomodar(TColaCP cola){
         else{
             mayor=HD;
         }
-        if(cola->f(r->entrada,mayor->entrada)==-1){
+
+        if(cola->f(r->entrada , mayor->entrada) == -1){
             intercambiar(mayor,r);
         }
+        else{
+            break;
+        }
+
     }
+
     if(HI!=NULL){
+        if(cola->f(r->entrada , HI->entrada) == -1)
         intercambiar(HI,r);
     }
     if(HD!=NULL){
+        if(cola->f(r->entrada , HD->entrada) == -1)
         intercambiar(HD,r);
     }
 }
 
-void intercambiar(TNodo hijo,TNodo padre){
-    TEntrada auxHijo=hijo->entrada;
-    hijo->entrada=padre->entrada;
-    padre->entrada=auxHijo;
 
-}
 
 /*
 void intercambiar(TNodo hijo,TNodo padre){
@@ -205,7 +231,7 @@ int cp_size(TColaCP cola){
 }
 
 
-void cp_destruirAux(TNodo r);
+
 
 //No hay caso en el que pueda fallar por eso retorna siempre true
 int cp_destruir(TColaCP cola){
@@ -226,5 +252,9 @@ void cp_destruirAux(TNodo r){
     if(r->hijo_derecho!=ELE_NULO){
         cp_destruirAux(r->hijo_derecho);
     }
+    r->entrada = NULL;
+    r->hijo_derecho = NULL;
+    r->hijo_izquierdo = NULL;
+    r->padre = NULL;
     free(r);
 }
