@@ -80,6 +80,8 @@ TNodo buscar_nodo(TColaCP cola,int cant){
     padrePadre : es el nuevo padre del padre del nodo a acomodar(el mismo nodo a acomodar)
 */
 
+
+//podrían simplemente intercambiar las entradas?
  void burbujeo(TColaCP cola,TNodo nodoAcomodar){
     TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre;
     while((cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
