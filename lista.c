@@ -71,10 +71,16 @@ int l_eliminar(TLista *lista , TPosicion pos){
 }
 
 TPosicion l_primera(TLista lista){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     return lista;
 }
 
 TPosicion l_ultima(TLista lista){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     TPosicion pos = lista;
     if (pos==POS_NULA)
         return pos;
@@ -86,14 +92,23 @@ TPosicion l_ultima(TLista lista){
 }
 
 TPosicion l_anterior(TLista lista , TPosicion pos){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     return pos->celda_anterior;
 }
 
 TPosicion l_siguiente(TLista lista, TPosicion pos){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     return pos->celda_siguiente;
 }
 
 TElemento recuperar(TLista lista ,TPosicion pos){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     if(pos == POS_NULA)
         return ELE_NULO;
 
@@ -102,6 +117,9 @@ TElemento recuperar(TLista lista ,TPosicion pos){
 }
 
 int l_size(TLista lista){
+    if(lista == POS_NULA)
+        exit(LST_NO_INI);
+
     int i=0;
     TPosicion pos = lista;
     while(pos!=POS_NULA){
@@ -113,7 +131,6 @@ int l_size(TLista lista){
 }
 
 int l_destruir(TLista *lista){ //invalidar los atributos
-
     if (lista == POS_NULA)
         return FALSE;
 

@@ -17,7 +17,6 @@ TColaCP crear_cola_cp(int (*f)(TEntrada,TEntrada)){
 }
 
 
-
 int cp_insertar(TColaCP cola,TEntrada entr){
     TNodo padreNuevo;
     int retorno= TRUE;
@@ -36,6 +35,7 @@ int cp_insertar(TColaCP cola,TEntrada entr){
                 nuevoNodo->hijo_derecho=NULL;
                 nuevoNodo->hijo_izquierdo=NULL;
                 cola->raiz=nuevoNodo;
+                cola->cantidad_elementos=cola->cantidad_elementos+1;
             }
             else{
                 cola->cantidad_elementos=cola->cantidad_elementos+1;
@@ -75,40 +75,6 @@ TNodo buscar_nodo(TColaCP cola,int cant){
     return retorno;
 }
 
-/*
-    hijoIzquierdoPadre : es el nuevo hijo izquierdo del padre del nodo a acomodar
-    hijoDerechoPadre : es el nuevo hijo derecho del padre del nodo a acomodar
-    hijoDerechoAcomodar : es el nuevo hijo derecho del nodo a acomodar
-    hijoIzquierdoAcomodar : es el nuevo hijo izquierdo del nodo a acomodar
-    padreAcomodar :  es el nuevo padre del nodo a acomdar
-    padrePadre : es el nuevo padre del padre del nodo a acomodar(el mismo nodo a acomodar)
-*/
-
-/* sol, esto aca comentado es el codigo que estaba adentro del while del burbujeo, si preferis como quedo ahora borra todo este comentario.
-
-    TNodo hijoIzquierdoPadre,hijoDerechoPadre,padrePadre,hijoDerechoAcomodar,hijoIzquierdoAcomodar,padreAcomodar,padre; //estas son las variables arriba del while
-
-     padre=nodoAcomodar->padre;
-        hijoDerechoPadre=nodoAcomodar->hijo_derecho;
-        hijoIzquierdoPadre=nodoAcomodar->hijo_izquierdo;
-        padrePadre=nodoAcomodar;
-        if(padre->hijo_derecho==nodoAcomodar){
-            hijoDerechoAcomodar=padre;
-            hijoIzquierdoAcomodar=padre->hijo_izquierdo;
-        }
-        else{
-            hijoDerechoAcomodar=padre->hijo_derecho;
-            hijoIzquierdoAcomodar=padre;
-        }
-        padreAcomodar=padre->padre;
-        nodoAcomodar->padre=padreAcomodar;
-        nodoAcomodar->hijo_derecho=hijoDerechoAcomodar;
-        nodoAcomodar->hijo_izquierdo=hijoIzquierdoAcomodar;
-        padre->hijo_derecho=hijoDerechoPadre;
-        padre->padre=padrePadre;
-        padre->hijo_izquierdo=hijoIzquierdoPadre;
-
-*/
 
 void burbujeo(TColaCP cola,TNodo nodoAcomodar){
 
@@ -124,7 +90,6 @@ void intercambiar(TNodo hijo,TNodo padre){
 }
 
 
-
 TEntrada cp_eliminar(TColaCP cola){
     TEntrada eliminar=ELE_NULO;
     TNodo nuevaRaiz;
@@ -135,7 +100,7 @@ TEntrada cp_eliminar(TColaCP cola){
         if(cola->cantidad_elementos!=0){
             if(cola->cantidad_elementos==1){
                 free(cola->raiz);
-                cola->raiz=NULL; // preguntar sobre null
+                cola->raiz=NULL;
                 cola->cantidad_elementos=0;
             }
             else{
@@ -159,8 +124,6 @@ TEntrada cp_eliminar(TColaCP cola){
     }
     return eliminar;
 }
-
-
 
 
 void acomodar(TColaCP cola){
@@ -194,35 +157,6 @@ void acomodar(TColaCP cola){
 }
 
 
-
-/*
-void intercambiar(TNodo hijo,TNodo padre){
-    TNodo aux,hijoDAux,hijoIAux;
-    if(padre->hijo_derecho==hijo){
-        aux=padre->hijo_derecho;
-        hijoDAux=aux->hijo_derecho;
-        hijoIAux=aux->hijo_izquierdo;
-        padre->hijo_derecho->padre=padre->padre;
-        padre->hijo_derecho->hijo_derecho->padre=padre;
-        padre->hijo_derecho->hijo_izquierdo=padre->hijo_izquierdo;
-        padre->hijo_izquierdo=hijoIAux;
-        padre->hijo_derecho=hijoDAux;
-    }
-    else{
-        aux=padre->hijo_izquierdo;
-        hijoDAux=aux->hijo_derecho;
-        hijoIAux=aux->hijo_izquierdo;
-        padre->hijo_izquierdo->padre=padre->padre;
-        padre->hijo_izquierdo->hijo_derecho=padre->hijo_derecho;
-        padre->hijo_izquierdo->hijo_izquierdo=padre;
-        padre->hijo_izquierdo=hijoIAux;
-        padre->hijo_derecho=hijoDAux;
-    }
-    padre->padre=aux;
-}
-
-*/
-
 int cp_size(TColaCP cola){
     if(cola==NULL){
         exit(CCP_NO_INI);
@@ -231,12 +165,9 @@ int cp_size(TColaCP cola){
 }
 
 
-
-
-//No hay caso en el que pueda fallar por eso retorna siempre true
 int cp_destruir(TColaCP cola){
     if(cola==NULL){
-        exit(CCP_NO_INI);
+        return FALSE;
     }
     else{
         cp_destruirAux(cola->raiz);
@@ -246,10 +177,10 @@ int cp_destruir(TColaCP cola){
 }
 
 void cp_destruirAux(TNodo r){
-    if(r->hijo_izquierdo!=ELE_NULO){
+    if(r->hijo_izquierdo!=NULL){
         cp_destruirAux(r->hijo_izquierdo);
     }
-    if(r->hijo_derecho!=ELE_NULO){
+    if(r->hijo_derecho!=NULL){
         cp_destruirAux(r->hijo_derecho);
     }
     r->entrada = NULL;

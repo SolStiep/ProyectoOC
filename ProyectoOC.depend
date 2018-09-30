@@ -1,8 +1,9 @@
 # depslib dependency file v1.0
-1538086854 source:/home/alumno/ProyectoOC/main.c
+1538346678 source:/home/alumno/ProyectoOC/main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
+	"colacp.h"
 
 1538152508 source:/home/alumno/Documentos/ProyectoOC/colacp.c
 	"colacp.h"
@@ -25,7 +26,7 @@
 1537875077 /home/alumno/Documentos/ProyectoOC/include/lista.h
 	"constantes.h"
 
-1538086854 source:/home/alumno/ProyectoOC/lista.c
+1538342602 source:/home/alumno/ProyectoOC/lista.c
 	"lista.h"
 	<stdlib.h>
 
@@ -37,14 +38,14 @@
 1538146777 /home/alumno/Documentos/ProyectoOC/lista.h
 	"constantes.h"
 
-1538087266 source:/home/alumno/ProyectoOC/colacp.c
+1538345616 source:/home/alumno/ProyectoOC/colacp.c
 	"colacp.h"
 	<stdlib.h>
 
 1538087052 /home/alumno/ProyectoOC/colacp.h
 	"constantes.h"
 
-1538086854 /home/alumno/ProyectoOC/constantes.h
+1538340648 /home/alumno/ProyectoOC/constantes.h
 
 1538086854 /home/alumno/ProyectoOC/lista.h
 	"constantes.h"
