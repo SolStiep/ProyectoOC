@@ -33,6 +33,9 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="ciudad.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="ciudad.h" />
 		<Unit filename="colacp.c">
 			<Option compilerVar="CC" />
