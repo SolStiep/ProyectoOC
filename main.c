@@ -4,9 +4,18 @@
 #include "colacp.h"
 #include "ciudad.h"
 
-int ubicacion_usuario_x,ubicacion_usuario_y;  // ver alguna otra forma de hacerlo TIENE QUE SER GLOBAL
-                                                  // PARA PODER USARLAS EN LAS DISTINTAS FUNCIONES
-int funcion(TEntrada t1 , TEntrada t2);
+typedef struct par{
+    int x;
+    int y;
+}*TPar;
+
+void obtenerListado(TLista lista_ciudades, TColaCP cola);
+int funcionAscendente(TEntrada t1,TEntrada t2);
+int funcionDescendente(TEntrada t1,TEntrada t2);
+int distancia_ciudad_usuario(TPar ubicacion_ciudad);
+
+//global
+TPar ubicacion_usuario;
 
 int main()
 {
@@ -20,61 +29,15 @@ int main()
     printf("el primer elemento es: %i",*e2);
 
 
+
 */
-
-/*
-    // prueba cola
-
-    int *c1=(int *)malloc(sizeof(int));
-    int *c2=(int *)malloc(sizeof(int));
-    int *c3=(int *)malloc(sizeof(int));
-    int *c4=(int *)malloc(sizeof(int));
-    int *v1=(int *)malloc(sizeof(int));
-    int *v2=(int *)malloc(sizeof(int));
-    int *eli=(int *)malloc(sizeof(int));
-    *c1=5;
-    *v1=1;
-    *c2=40;
-    *v2=2;
-    *c3=45;
-    *c4=10;
-    TEntrada e1=(TEntrada)malloc((sizeof(struct entrada)));
-    TEntrada e2=(TEntrada)malloc((sizeof(struct entrada)));
-    TEntrada e3=(TEntrada)malloc((sizeof(struct entrada)));
-    TEntrada e4=(TEntrada)malloc((sizeof(struct entrada)));
-    TEntrada eliminar=(TEntrada)malloc((sizeof(struct entrada)));
-    e1->clave=c1;
-    e1->valor=v1;
-    e2->clave=c2;
-    e2->valor=v2;
-    e3->clave=c3;
-    e3->valor=v1;
-    e4->clave=c4;
-    e4->valor=v2;
-    TColaCP cola=crear_cola_cp(&funcion);
-
-    cp_insertar(cola,e1);
-    cp_insertar(cola,e2);
-    cp_insertar(cola,e3);
-    cp_insertar(cola,e4);
-    printf("tamaño antes de eliminar alguna entrada: %i\n",cola->cantidad_elementos);
-    eliminar=cp_eliminar(cola);
-    eli=eliminar->clave;
-    printf("tamaño: %i",cola->cantidad_elementos);
-    printf("\nla clave de la entrada eliminada es: %i",*eli);
-    printf("\n elimino otra: ");
-    eliminar=cp_eliminar(cola);
-    eli=eliminar->clave;
-    printf("tamaño: %i",cola->cantidad_elementos);
-    printf("\nla clave de la entrada eliminada es: %i",*eli);
-*/
-
-
 // PROGRAMA PRINCIPAL
 
     int operacion=0;
     char nombre_archivo[26];
-    TLista lista_cuidades;
+
+    TLista lista_cuidades; // podria ser global tambien ¿?
+
 
     printf("Ingrese nombre del archivo: ");
     scanf("%s",nombre_archivo);
@@ -84,13 +47,13 @@ int main()
         printf("Elija operacion a realizar: ");
         scanf("%i",&operacion);
         if(operacion==1){
-            //creo la cola con la funcionAscendente y
-            // llamo a mostrarAscendente
-
+            TColaCP cola=crear_cola_cp(funcionAscendente);
+            obtenerListado(lista_cuidades,cola);
         }
         else{
             if(operacion==2){
-                //mostrar descendente
+                TColaCP cola=crear_cola_cp(funcionDescendente);
+                obtenerListado(lista_cuidades,cola);
             }
             else{
                 if(operacion==3){
@@ -106,48 +69,45 @@ int main()
     return 0;
 }
 
-int funcion(TEntrada t1 , TEntrada t2){
-    int retorno;
-    int *c1=t1->clave,*c2=t2->clave;
-    int a =*c1,b=*c2;
-    if(a > b){
-        retorno=1;
-    }
-    else{
-        if(a==b){
-            retorno=0;
-        }
-        else{
-            retorno=-1;
-        }
-    }
-    return retorno;
+int distancia_ciudad_usuario(TPar ubicacion_ciudad){
+    return abs(ubicacion_usuario->x-ubicacion_ciudad->x)+abs(ubicacion_usuario->y-ubicacion_ciudad->y);
 }
 
-void mostrarAscendente(TLista lista_ciudades, TColaCP cola){
-    float *clav;
-    TCiudad val;
+void obtenerListado(TLista lista_ciudades, TColaCP cola){
+    TPar clav;
+    TCiudad val,ciu;
     TEntrada entr;
-    TCiudad ciu;
-    // por cada ciudad de la lista la agrego a la cola con la funcionAscendente
-        clav=(float *)malloc(sizeof(float));
+    TPosicion elem;
+    int i=1;
+    if(l_size(lista_ciudades)>0){
+        elem=l_primera(lista_ciudades);
+        ciu=elem->elemento;
+    }
+    // por cada ciudad de la lista la agrego a la cola
+    while(i<l_size(lista_ciudades)){
+        clav=(TPar)malloc(sizeof(struct par));
         val=(TCiudad)malloc(sizeof(struct ciudad));
         entr=(TEntrada)malloc((sizeof(struct entrada)));
-        *clav=abs(ciu->pos_x-ubicacion_usuario_x)+abs(ciu->pos_y-ubicacion_usuario_y);
+        clav->x=ciu->pos_x;
+        clav->y=ciu->pos_y;
         entr->clave=clav;
         entr->valor=ciu;
         cp_insertar(cola,entr);
+        elem=l_siguiente(lista_ciudades,elem);
+        ciu=elem->elemento;
+        i++;
+    }
 }
 
 int funcionAscendente(TEntrada t1,TEntrada t2){
-    int retorno;
-    float *c1=t1->clave,*c2=t2->clave;
-    float a =*c1,b=*c2;
-    if(a<b){
+    int retorno,dist_ciu1,dist_ciu2;
+    dist_ciu1=distancia_ciudad_usuario(t1->clave);
+    dist_ciu2=distancia_ciudad_usuario(t2->clave);
+    if(dist_ciu1<dist_ciu2){
         retorno=1;
     }
     else{
-        if(a>b){
+        if(dist_ciu1>dist_ciu2){
             retorno=-1;
         }
         else{
@@ -156,3 +116,23 @@ int funcionAscendente(TEntrada t1,TEntrada t2){
     }
     return retorno;
 }
+
+int funcionDescendente(TEntrada t1,TEntrada t2){
+    int retorno,dist_ciu1,dist_ciu2;
+    dist_ciu1=distancia_ciudad_usuario(t1->clave);
+    dist_ciu2=distancia_ciudad_usuario(t2->clave);
+    if(dist_ciu1>dist_ciu2){
+        retorno=1;
+    }
+    else{
+        if(dist_ciu1<dist_ciu2){
+            retorno=-1;
+        }
+        else{
+            retorno=0;
+        }
+    }
+    return retorno;
+}
+
+
