@@ -1,4 +1,3 @@
-/*
 #include <stdio.h>
 #include <stdlib.h>
 #include "lista.h"
@@ -234,5 +233,4 @@ TLista generar_lista(FILE* arch){
 
     return lista_ciudades;
 }
-*/
 

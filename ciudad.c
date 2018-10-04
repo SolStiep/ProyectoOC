@@ -12,7 +12,8 @@ int distancia_manhattan(TCiudad ciudad1,TCiudad ciudad2){
 TCiudad crear_ciudad(float x, float y , char* name){
 
     TCiudad city = (TCiudad) malloc(sizeof(struct ciudad));
-    name = (char *) malloc(sizeof(char) * strlen(name));
+    city->nombre = (char *) malloc(sizeof(char) * strlen(name));
+    strcpy(city->nombre , name);
     city->pos_x = x;
     city->pos_y = y;
 
