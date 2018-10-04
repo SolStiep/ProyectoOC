@@ -49,7 +49,7 @@ int main()
         printf("Elija operacion a realizar: ");
         scanf("%i",&operacion);
         if(operacion==1){
-            TColaCP cola=crear_cola_cp(funcionAscendente); //como hacemos para pasar la funcion?
+            TColaCP cola=crear_cola_cp(&funcionAscendente); //como hacemos para pasar la funcion?
             generar_cola(lista_ciudades,cola);
         }
         else{
@@ -66,7 +66,7 @@ int main()
                         // liberar espacio utilizado
                     }
                     else{
-                        printf("operacion invalida, por favor ingrese nuevamente: \n");
+                        printf("Operacion invalida, por favor ingrese nuevamente: \n");
                     }
                 }
             }
