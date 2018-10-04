@@ -5,7 +5,7 @@
 	"lista.h"
 	"colacp.h"
 
-1538152508 source:/home/alumno/Documentos/ProyectoOC/colacp.c
+1538404291 source:/home/alumno/Documentos/ProyectoOC/colacp.c
 	"colacp.h"
 	<stdlib.h>
 
@@ -13,13 +13,14 @@
 
 1538144338 /home/alumno/Documentos/ProyectoOC/constantes.h
 
-1538152517 source:/home/alumno/Documentos/ProyectoOC/main.c
+1538617622 source:/home/alumno/Documentos/ProyectoOC/main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
 	"colacp.h"
+	"ciudad.h"
 
-1538152165 source:/home/alumno/Documentos/ProyectoOC/lista.c
+1538414217 source:/home/alumno/Documentos/ProyectoOC/lista.c
 	"lista.h"
 	<stdlib.h>
 
@@ -69,4 +70,13 @@
 	<math.h>
 
 1538416959 /home/alumno/ProyectoOC/ciudad.h
+
+1538611699 source:/home/alumno/Documentos/ProyectoOC/ciudad.c
+	"ciudad.h"
+	<math.h>
+	"string.h"
+	<stdio.h>
+	<stdlib.h>
+
+1538610226 /home/alumno/Documentos/ProyectoOC/ciudad.h
 
