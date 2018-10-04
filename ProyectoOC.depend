@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1538419675 source:/home/alumno/ProyectoOC/main.c
+1538687886 source:/home/alumno/ProyectoOC/main.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"
 	"colacp.h"
+	"ciudad.h"
 
 1538404291 source:/home/alumno/Documentos/ProyectoOC/colacp.c
 	"colacp.h"
@@ -27,7 +28,7 @@
 1537875077 /home/alumno/Documentos/ProyectoOC/include/lista.h
 	"constantes.h"
 
-1538416959 source:/home/alumno/ProyectoOC/lista.c
+1538687886 source:/home/alumno/ProyectoOC/lista.c
 	"lista.h"
 	<stdlib.h>
 
@@ -39,16 +40,16 @@
 1538146777 /home/alumno/Documentos/ProyectoOC/lista.h
 	"constantes.h"
 
-1538416959 source:/home/alumno/ProyectoOC/colacp.c
+1538655478 source:/home/alumno/ProyectoOC/colacp.c
 	"colacp.h"
 	<stdlib.h>
 
-1538416959 /home/alumno/ProyectoOC/colacp.h
+1538655478 /home/alumno/ProyectoOC/colacp.h
 	"constantes.h"
 
-1538416959 /home/alumno/ProyectoOC/constantes.h
+1538655478 /home/alumno/ProyectoOC/constantes.h
 
-1538416959 /home/alumno/ProyectoOC/lista.h
+1538655478 /home/alumno/ProyectoOC/lista.h
 	"constantes.h"
 
 1538047626 source:/home/alumno/ProyectoOC/ProyectoOC/lista.c
@@ -65,11 +66,14 @@
 	<stdlib.h>
 	"lista.h"
 
-1538419689 source:/home/alumno/ProyectoOC/ciudad.c
+1538687886 source:/home/alumno/ProyectoOC/ciudad.c
 	"ciudad.h"
 	<math.h>
+	"string.h"
+	<stdio.h>
+	<stdlib.h>
 
-1538416959 /home/alumno/ProyectoOC/ciudad.h
+1538655478 /home/alumno/ProyectoOC/ciudad.h
 
 1538663390 source:/home/alumno/Documentos/ProyectoOC/ciudad.c
 	"ciudad.h"

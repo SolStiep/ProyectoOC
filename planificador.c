@@ -41,34 +41,38 @@ int main(int argc , char * argv[]) {
         exit(FALSE);
     }
 
-    FILE *archivo = fopen(argv[1],"r"); //como hago para ver si la invocacion no fue la indicada?
+    FILE *archivo = fopen(argv[1],"r");
+    if(archivo==NULL){
+        printf("ERROR: no se pudo abrir el archivo con el nombre ingresado");
+        exit(FALSE);
+    }
 
     TLista lista_ciudades = generar_lista(archivo);
-
     while(operacion!=4){
         printf("Elija operacion a realizar: ");
         scanf("%i",&operacion);
-        if(operacion==1){
-            TColaCP cola=crear_cola_cp(&funcionAscendente); //como hacemos para pasar la funcion?
-            generar_cola(lista_ciudades,cola);
-        }
-        else{
-            if(operacion==2){
-                TColaCP cola=crear_cola_cp(funcionDescendente); //como hacemos para pasar la funcion?
+        switch(operacion){
+            case 1:{
+                TColaCP cola=crear_cola_cp(&funcionAscendente);
                 generar_cola(lista_ciudades,cola);
+                break;
             }
-            else{
-                if(operacion==3){
-                    //reducir horas manejo
-                }
-                else{
-                    if(operacion==4){
-                        // liberar espacio utilizado
-                    }
-                    else{
-                        printf("Operacion invalida, por favor ingrese nuevamente: \n");
-                    }
-                }
+            case 2:{
+                TColaCP cola=crear_cola_cp(&funcionDescendente);
+                generar_cola(lista_ciudades,cola);
+                break;
+            }
+            case 3:{
+                // reducir horas manejo
+                break;
+            }
+            case 4:{
+                //limpiar memoria
+                break;
+            }
+            default:{
+                printf("Operacion invalida, por favor ingrese nuevamente: \n");
+                break;
             }
         }
     }
@@ -81,13 +85,13 @@ float distancia_ciudad_usuario(TPar* p_ubicacion_ciudad){
     return abs(ubicacion_usuario.x-ubicacion_ciudad.x)+abs(ubicacion_usuario.y-ubicacion_ciudad.y);
 }
 
-void generar_cola(TLista lista_ciudades, TColaCP cola){ //le añade las entradas a la cola dependiendo la funcion que tenga.
+void generar_cola(TLista lista_ciudades, TColaCP cola){
     TPar clav;
     TCiudad ciu;
     TEntrada entr;
     TPosicion pos;
 
-    pos = l_primera(lista_ciudades); //si la lista es vacia devuelve pos_nula
+    pos = l_primera(lista_ciudades);
 
     // por cada ciudad de la lista la agrego a la cola
     while(pos != POS_NULA){
@@ -97,7 +101,6 @@ void generar_cola(TLista lista_ciudades, TColaCP cola){ //le añade las entradas
         entr->clave= &clav;
         entr->valor= ciu;
         cp_insertar(cola,entr);
-
         pos=l_siguiente(lista_ciudades,pos);
     }
 }
@@ -212,6 +215,7 @@ TLista generar_lista(FILE* arch){
 
         y = atof(num_real);
 
+        fclose(arch);
 
         //ahora construimos la ciudad y la insertamos en la lista
 
