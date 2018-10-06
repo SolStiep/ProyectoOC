@@ -49,7 +49,12 @@ int main(int argc , char * argv[]) {
 
     TLista lista_ciudades = generar_lista(archivo);
     while(operacion!=4){
-        printf("Elija operacion a realizar: ");
+        printf("Listado de operaciones: \n");
+        printf("1: Mostrar ascendente.\n");
+        printf("2: Mostrar descendente.\n");
+        printf("3: Reducir horas de manejo.\n");
+        printf("4: Salir.\n");
+        printf("Elija el numero de operacion a realizar: ");
         scanf("%i",&operacion);
         switch(operacion){
             case 1:{
