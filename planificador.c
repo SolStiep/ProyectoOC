@@ -27,6 +27,8 @@ int funcionAscendente(TEntrada t1,TEntrada t2);
 int funcionDescendente(TEntrada t1,TEntrada t2);
 float distancia_ciudad_usuario(TPar* ubicacion_ciudad);
 TLista generar_lista(FILE* arch);
+void mostrarCola(TColaCP cola);
+
 //global
 TPar ubicacion_usuario;
 
@@ -48,6 +50,7 @@ int main(int argc , char * argv[]) {
     }
 
     TLista lista_ciudades = generar_lista(archivo);
+
     while(operacion!=4){
         printf("Listado de operaciones: \n");
         printf("1: Mostrar ascendente.\n");
@@ -60,11 +63,17 @@ int main(int argc , char * argv[]) {
             case 1:{
                 TColaCP cola=crear_cola_cp(&funcionAscendente);
                 generar_cola(lista_ciudades,cola);
-                break;
+                printf("El listado ascendentes de las ciudades es: \n");
+                mostrarCola(cola);
+                cp_destruir(cola); // LLAMAMOS A DESTRUIR O DIRECTAMENTE HACEMOS FREE(COLA) ?
+                break;              //PORQUE YA QUEDO LIBERADA LA MEMORIA DE TODOS LOS ELEMENTOS AL ELIMINARLOS.
             }
             case 2:{
                 TColaCP cola=crear_cola_cp(&funcionDescendente);
                 generar_cola(lista_ciudades,cola);
+                printf("El listado descendentes de las ciudades es: \n");
+                mostrarCola(cola);  // LLAMAMOS A DESTRUIR O DIRECTAMENTE HACEMOS FREE(COLA) ?
+                cp_destruir(cola); //PORQUE YA QUEDO LIBERADA LA MEMORIA DE TODOS LOS ELEMENTOS AL ELIMINARLOS.
                 break;
             }
             case 3:{
@@ -73,10 +82,11 @@ int main(int argc , char * argv[]) {
             }
             case 4:{
                 //limpiar memoria
+                l_destruir(lista_ciudades); // solo eso porque las colas se destruyen despues de usarlas en c/operacion no?
                 break;
             }
             default:{
-                printf("Operacion invalida, por favor ingrese nuevamente: \n");
+                printf("Operacion invalida, por favor ingrese un numero valido: \n");
                 break;
             }
         }
@@ -243,3 +253,12 @@ TLista generar_lista(FILE* arch){
     return lista_ciudades;
 }
 
+void mostrarCola(TColaCP cola){
+    int i=0;
+    TCiudad entr;
+    while(i<cp_size(cola)){
+        entr=(TCiudad)cp_eliminar(cola)->valor;
+        printf("%i. %s\n",i+1,entr->nombre);
+        i++;
+    }
+}

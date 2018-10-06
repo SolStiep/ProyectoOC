@@ -2,34 +2,9 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="ciudad.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="lista.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="236" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="planificador.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1190" topLine="155" />
-		</Cursor>
-	</File>
-	<File name="lista.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="803" topLine="10" />
-		</Cursor>
-	</File>
-	<File name="lista.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="409" topLine="10" />
-		</Cursor>
-	</File>
-	<File name="ciudad.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="623" topLine="0" />
-		</Cursor>
-	</File>
-	<File name="colacp.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="1133" topLine="9" />
+			<Cursor1 position="409" topLine="16" />
 		</Cursor>
 	</File>
 	<File name="main.c" open="0" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
@@ -37,14 +12,50 @@
 			<Cursor1 position="5714" topLine="211" />
 		</Cursor>
 	</File>
+	<File name="planificador.c" open="1" top="1" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="987" topLine="69" />
+		</Cursor>
+		<Folding>
+			<Collapse line="97" />
+			<Collapse line="102" />
+			<Collapse line="122" />
+			<Collapse line="141" />
+			<Collapse line="160" />
+			<Collapse line="255" />
+		</Folding>
+	</File>
+	<File name="colacp.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="98" topLine="9" />
+		</Cursor>
+	</File>
 	<File name="constantes.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="colacp.h" open="0" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+	<File name="ciudad.h" open="0" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="98" topLine="0" />
+			<Cursor1 position="236" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="colacp.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1133" topLine="129" />
+		</Cursor>
+		<Folding>
+			<Collapse line="19" />
+		</Folding>
+	</File>
+	<File name="lista.c" open="0" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="-1" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="803" topLine="10" />
+		</Cursor>
+	</File>
+	<File name="ciudad.c" open="0" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="623" topLine="0" />
 		</Cursor>
 	</File>
 </CodeBlocks_layout_file>
