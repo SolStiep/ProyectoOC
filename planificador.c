@@ -272,31 +272,24 @@ void mostrarCola(TColaCP cola){
 }
 
 float generar_cola_menos_manejo(TLista lista_ciudades , TColaCP cola){ //preguntar si no hay que pasar un puntero a la cola
-    TColaCP cola_aux;
+    TColaCP cola_aux; // es la cola que se ira llenando y vaciando, a fin de devolver la ciudad mas cercana al usuario
+    TLista lista_aux = crear_lista(); // es la lista que se ira llenando y vaciando, a fin de excluir la ciudad que ya fue visitada
+    TPosicion pos = l_primera(lista_ciudades);
 
-    TPosicion pos_fija = l_primera(lista_ciudades);
-    TPosicion pos_recorre = l_primera(lista_ciudades);
-
-    TPar clav;
     TCiudad ciu;
     TEntrada entr;
     TPar* p_clav;
 
     float dist_recorrida = 0;
 
-    while(pos_fija!=POS_NULA){
-        cola_aux = crear_cola_cp(&funcionAscendente);
-        pos_recorre = pos_fija;
+    while(pos!=POS_NULA){ //generamos la lista_aux por primera vez.
+        l_insertar(&lista_aux, POS_NULA , pos->elemento); //insertamos siempre en la primer posicion
+        pos = l_siguiente(lista_ciudades , pos);
+    }
 
-        while(pos_recorre != POS_NULA){
-            ciu = (TCiudad) pos_recorre->elemento; //preguntar por este casteo
-            clav = crear_par(ciu->pos_x , ciu->pos_y);
-            entr=(TEntrada)malloc((sizeof(struct entrada)));
-            entr->clave= &clav;
-            entr->valor= ciu;
-            cp_insertar(cola_aux,entr);
-            pos_recorre=l_siguiente(lista_ciudades,pos_recorre);
-        }
+    while(l_size(lista_aux) > 0){
+        cola_aux = crear_cola_cp(&funcionAscendente);
+        generar_cola(lista_aux , cola_aux);
 
         entr = cp_eliminar(cola_aux);
         cp_insertar(cola,entr);
@@ -309,17 +302,20 @@ float generar_cola_menos_manejo(TLista lista_ciudades , TColaCP cola){ //pregunt
         ubicacion_usuario.x = ciu->pos_x;
         ubicacion_usuario.y = ciu->pos_y;
 
-        int i=0;
+        l_destruir(&lista_aux);
+        lista_aux = crear_lista();
 
+        int i=0;
         while(i<cp_size(cola)){ //es necesario hacer este while ya que la cola no le hace free a las entradas?
             TEntrada e = cp_eliminar(cola);
+            ciu = (TCiudad) entr->valor;
+            l_insertar(&lista_aux , POS_NULA , ciu);
             free(e);
             i++;
         }
 
         cp_destruir(cola_aux);
 
-        pos_fija = l_siguiente(lista_ciudades,pos_fija);
     }
 
 
