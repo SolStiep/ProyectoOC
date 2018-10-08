@@ -147,7 +147,7 @@ TLista generar_lista(FILE* arch){
     TLista lista_ciudades = crear_lista();
 
     char linea[250];
-    char nombre_ciudad[max_ciudad] , num_real[20];
+    char nombre_ciudad[max_ciudad] , num_real[30];
     double x,y;
     char c='a';
     int i=0 , l=0;
@@ -259,10 +259,10 @@ void generar_cola(TLista lista_ciudades, TColaCP cola){ //preguntar si no hay qu
 }
 
 void mostrarCola(TColaCP cola){
-    int i=0;
+    int i=1;
     TCiudad city;
     TEntrada entr;
-    while(i<cp_size(cola)){
+    while(cp_size(cola) > 0){
         entr=cp_eliminar(cola)->valor;
         city = (TCiudad) entr->valor;
         printf("%i. %s\n",i+1,city->nombre);
@@ -305,13 +305,12 @@ float generar_cola_menos_manejo(TLista lista_ciudades , TColaCP cola){ //pregunt
         l_destruir(&lista_aux);
         lista_aux = crear_lista();
 
-        int i=0;
-        while(i<cp_size(cola)){ //es necesario hacer este while ya que la cola no le hace free a las entradas?
+
+        while(cp_size(cola) > 0){ //es necesario hacer este while ya que la cola no le hace free a las entradas?
             TEntrada e = cp_eliminar(cola);
             ciu = (TCiudad) entr->valor;
             l_insertar(&lista_aux , POS_NULA , ciu);
             free(e);
-            i++;
         }
 
         cp_destruir(cola_aux);
