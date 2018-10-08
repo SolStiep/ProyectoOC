@@ -21,13 +21,13 @@ TPar crear_par(int x,int y){
 }
 
 
-
-void generar_cola(TLista lista_ciudades, TColaCP cola);
+void generar_cola(TLista lista_ciudades, TColaCP cola); //preguntar si no hay que pasar un puntero a la cola
 int funcionAscendente(TEntrada t1,TEntrada t2);
 int funcionDescendente(TEntrada t1,TEntrada t2);
 float distancia_ciudad_usuario(TPar* ubicacion_ciudad);
 TLista generar_lista(FILE* arch);
 void mostrarCola(TColaCP cola);
+float generar_cola_menos_manejo(TLista lista_ciudades , TColaCP cola); //preguntar si no hay que pasar un puntero a la cola
 
 //global
 TPar ubicacion_usuario;
@@ -77,12 +77,17 @@ int main(int argc , char * argv[]) {
                 break;
             }
             case 3:{
-                // reducir horas manejo
+                TColaCP cola = crear_cola_cp(&funcionAscendente);
+                float f = generar_cola_menos_manejo(lista_ciudades , cola);
+                printf("Reducir horas manejo \n");
+                mostrarCola(cola);
+                cp_destruir(cola);
+                printf("Total recorrido: %f. \n" ,f);
                 break;
             }
             case 4:{
                 //limpiar memoria
-                l_destruir(lista_ciudades); // solo eso porque las colas se destruyen despues de usarlas en c/operacion no?
+                l_destruir(&lista_ciudades); // solo eso porque las colas se destruyen despues de usarlas en c/operacion no?
                 break;
             }
             default:{
@@ -98,26 +103,6 @@ int main(int argc , char * argv[]) {
 float distancia_ciudad_usuario(TPar* p_ubicacion_ciudad){
     TPar ubicacion_ciudad = *p_ubicacion_ciudad;
     return abs(ubicacion_usuario.x-ubicacion_ciudad.x)+abs(ubicacion_usuario.y-ubicacion_ciudad.y);
-}
-
-void generar_cola(TLista lista_ciudades, TColaCP cola){
-    TPar clav;
-    TCiudad ciu;
-    TEntrada entr;
-    TPosicion pos;
-
-    pos = l_primera(lista_ciudades);
-
-    // por cada ciudad de la lista la agrego a la cola
-    while(pos != POS_NULA){
-        ciu = (TCiudad) pos->elemento; //preguntar por este casteo
-        clav = crear_par(ciu->pos_x , ciu->pos_y);
-        entr=(TEntrada)malloc((sizeof(struct entrada)));
-        entr->clave= &clav;
-        entr->valor= ciu;
-        cp_insertar(cola,entr);
-        pos=l_siguiente(lista_ciudades,pos);
-    }
 }
 
 int funcionAscendente(TEntrada t1,TEntrada t2){
@@ -230,14 +215,13 @@ TLista generar_lista(FILE* arch){
 
         y = atof(num_real);
 
-        fclose(arch);
 
         //ahora construimos la ciudad y la insertamos en la lista
 
         TCiudad city = crear_ciudad(x,y,nombre_ciudad);
-        TPosicion pos;
+        TPosicion pos = POS_NULA;
 
-        if(l_size(lista_ciudades) == 0){
+        if(pos == POS_NULA){
             l_insertar(&lista_ciudades , POS_NULA , city);
             pos = l_primera(lista_ciudades);
         }
@@ -249,16 +233,95 @@ TLista generar_lista(FILE* arch){
 
     }
 
+    fclose(arch);
 
     return lista_ciudades;
 }
 
+void generar_cola(TLista lista_ciudades, TColaCP cola){ //preguntar si no hay que pasar un puntero a la cola
+    TPar clav;
+    TCiudad ciu;
+    TEntrada entr;
+    TPosicion pos;
+
+    pos = l_primera(lista_ciudades);
+
+    // por cada ciudad de la lista la agrego a la cola
+    while(pos != POS_NULA){
+        ciu = (TCiudad) pos->elemento; //preguntar por este casteo
+        clav = crear_par(ciu->pos_x , ciu->pos_y); //al no ser un puntero no podemos destruirlo. no importa? en que momento se libera esta memoria?
+        entr=(TEntrada)malloc((sizeof(struct entrada))); //cuando liberamos esta entrada?
+        entr->clave= &clav;
+        entr->valor= ciu;
+        cp_insertar(cola,entr);
+        pos=l_siguiente(lista_ciudades,pos);
+    }
+}
+
 void mostrarCola(TColaCP cola){
     int i=0;
-    TCiudad entr;
+    TCiudad city;
+    TEntrada entr;
     while(i<cp_size(cola)){
-        entr=(TCiudad)cp_eliminar(cola)->valor;
-        printf("%i. %s\n",i+1,entr->nombre);
+        entr=cp_eliminar(cola)->valor;
+        city = (TCiudad) entr->valor;
+        printf("%i. %s\n",i+1,city->nombre);
+        free(entr);
         i++;
     }
+}
+
+float generar_cola_menos_manejo(TLista lista_ciudades , TColaCP cola){ //preguntar si no hay que pasar un puntero a la cola
+    TColaCP cola_aux;
+
+    TPosicion pos_fija = l_primera(lista_ciudades);
+    TPosicion pos_recorre = l_primera(lista_ciudades);
+
+    TPar clav;
+    TCiudad ciu;
+    TEntrada entr;
+    TPar* p_clav;
+
+    float dist_recorrida = 0;
+
+    while(pos_fija!=POS_NULA){
+        cola_aux = crear_cola_cp(&funcionAscendente);
+        pos_recorre = pos_fija;
+
+        while(pos_recorre != POS_NULA){
+            ciu = (TCiudad) pos_recorre->elemento; //preguntar por este casteo
+            clav = crear_par(ciu->pos_x , ciu->pos_y);
+            entr=(TEntrada)malloc((sizeof(struct entrada)));
+            entr->clave= &clav;
+            entr->valor= ciu;
+            cp_insertar(cola_aux,entr);
+            pos_recorre=l_siguiente(lista_ciudades,pos_recorre);
+        }
+
+        entr = cp_eliminar(cola_aux);
+        cp_insertar(cola,entr);
+
+        ciu = (TCiudad) entr->valor;
+        p_clav = (TPar*) entr->clave;
+
+        dist_recorrida+= distancia_ciudad_usuario(p_clav);
+
+        ubicacion_usuario.x = ciu->pos_x;
+        ubicacion_usuario.y = ciu->pos_y;
+
+        int i=0;
+
+        while(i<cp_size(cola)){ //es necesario hacer este while ya que la cola no le hace free a las entradas?
+            TEntrada e = cp_eliminar(cola);
+            free(e);
+            i++;
+        }
+
+        cp_destruir(cola_aux);
+
+        pos_fija = l_siguiente(lista_ciudades,pos_fija);
+    }
+
+
+    return dist_recorrida;
 }

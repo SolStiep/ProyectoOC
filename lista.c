@@ -22,7 +22,7 @@ int l_insertar(TLista *lista , TPosicion pos ,TElemento elem){
         *lista = celda;
     }
     else{
-        if (*lista == pos || pos==POS_NULA){ //estamos insertando en la primer posicion (por lo tanto hace falta que ahora lista apunte a celda)
+        if (*lista == pos || pos == POS_NULA){ //estamos insertando en la primer posicion (por lo tanto hace falta que ahora lista apunte a celda)
             TPosicion pos_primera = *lista;
             pos_primera->celda_anterior = celda;
             celda->celda_siguiente = pos_primera;
