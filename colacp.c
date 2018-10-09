@@ -1,6 +1,12 @@
 #include "colacp.h"
 #include <stdlib.h>
+#include "ciudad.h"
 #include <stdio.h>
+
+typedef struct par{
+    float x;
+    float y;
+}TPar;
 
 //estas son las declaraciones de las funciones privadas auxiliares
 void intercambiar(TNodo hijo,TNodo padre);
@@ -52,7 +58,10 @@ int cp_insertar(TColaCP cola,TEntrada entr){
                 burbujeo(cola,nuevoNodo);
             }
         }
+
     }
+
+   // printf("raiz=%i  hijoI= %p  hijoD=%p\n",cola->raiz->entrada->clave,cola->raiz->hijo_izquierdo,cola->raiz->hijo_derecho);
     return retorno;
 }
 
@@ -63,7 +72,8 @@ TNodo buscar_nodo(TColaCP cola,int cant){
         retorno= cola->raiz;
     }
     else{
-        retorno=buscar_nodo(cola,cant/=2);
+        retorno=buscar_nodo(cola,cant/2);
+
         if(cant%2==0){
             siguiente=retorno->hijo_izquierdo;
         }
@@ -79,8 +89,9 @@ TNodo buscar_nodo(TColaCP cola,int cant){
 
 
 void burbujeo(TColaCP cola,TNodo nodoAcomodar){
-    while((cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
+    while((nodoAcomodar!=cola->raiz)&&(cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
         intercambiar(nodoAcomodar,nodoAcomodar->padre);
+        nodoAcomodar=nodoAcomodar->padre;
     }
 }
 
@@ -108,17 +119,31 @@ TEntrada cp_eliminar(TColaCP cola){
             else{
                 nuevaRaiz=buscar_nodo(cola,cola->cantidad_elementos);
                 eliminar=cola->raiz->entrada;
+/*
+                TCiudad ciu=(TCiudad)nuevaRaiz->entrada->valor;
+                TPar *p=(TPar *)nuevaRaiz->entrada->clave;
+                printf("nombre: %s  ",ciu->nombre);
+                printf("clave: %f ",p->x);
 
+                if(nuevaRaiz->padre->hijo_derecho==nuevaRaiz){
+                    nuevaRaiz->padre->hijo_derecho=NULL;
+                }
+                else{
+                    nuevaRaiz->padre->hijo_izquierdo=NULL;
+                }
                 nuevaRaiz->padre=NULL;
                 nuevaRaiz->hijo_derecho=cola->raiz->hijo_derecho;
                 nuevaRaiz->hijo_izquierdo=cola->raiz->hijo_izquierdo;
+*/
+                cola->raiz->entrada = nuevaRaiz->entrada;
+               // cola->raiz->hijo_derecho = NULL;
+                //cola->raiz->hijo_izquierdo = NULL;
+                nuevaRaiz->entrada=NULL;
+                nuevaRaiz->hijo_derecho=NULL;
+                nuevaRaiz->hijo_izquierdo=NULL;
+                free(nuevaRaiz);
 
-                cola->raiz->entrada = NULL;
-                cola->raiz->hijo_derecho = NULL;
-                cola->raiz->hijo_izquierdo = NULL;
-                free(cola->raiz);
-
-                cola->raiz=nuevaRaiz;
+              //  cola->raiz=nuevaRaiz;
                 cola->cantidad_elementos=cola->cantidad_elementos-1;
                 acomodar(cola);
             }
@@ -129,7 +154,7 @@ TEntrada cp_eliminar(TColaCP cola){
 
 
 void acomodar(TColaCP cola){
-    TNodo mayor , r=cola->raiz , HI=r->hijo_izquierdo , HD=r->hijo_derecho;
+    TNodo mayor , r=cola->raiz,HI=r->hijo_izquierdo , HD=r->hijo_derecho;
 
     while(HD!=NULL&&HI!=NULL){
         if(cola->f(HI->entrada,HD->entrada)==1){
@@ -141,6 +166,9 @@ void acomodar(TColaCP cola){
 
         if(cola->f(r->entrada , mayor->entrada) == -1){
             intercambiar(mayor,r);
+            r=mayor;
+            HD=r->hijo_derecho;
+            HI=r->hijo_izquierdo;
         }
         else{
             break;
@@ -191,3 +219,22 @@ void cp_destruirAux(TNodo r){
     r->padre = NULL;
     free(r);
 }
+
+void pre(TColaCP cola , TNodo raiz);
+void mostrar_Cola(TColaCP cola){
+    pre(cola , cola->raiz);
+}
+
+void pre(TColaCP cola , TNodo raiz){
+    TCiudad city = (TCiudad) raiz->entrada->valor;
+    printf("city: %s \n" , city->nombre);
+    TPar *p=(TPar *)raiz->entrada->clave;
+    printf("par x: %f  ",p->x);
+    printf("par y: %f\n",p->y);
+
+    if(raiz->hijo_izquierdo != NULL)
+        pre(cola,raiz->hijo_izquierdo);
+    if(raiz->hijo_derecho != NULL)
+        pre(cola , raiz->hijo_derecho);
+}
+

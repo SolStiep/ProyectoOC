@@ -12,15 +12,6 @@ typedef struct par{
     float y;
 }TPar;
 
-TPar crear_par(float x,float y){
-    TPar par;
-    par.x = x;
-    par.y = y;
-
-    return par;
-}
-
-
 void generar_cola(TLista lista_ciudades, TColaCP cola); //preguntar si no hay que pasar un puntero a la cola
 int funcionAscendente(TEntrada t1,TEntrada t2);
 int funcionDescendente(TEntrada t1,TEntrada t2);
@@ -50,8 +41,8 @@ int main(int argc , char * argv[]) {
     }
 
     TLista lista_ciudades = generar_lista(archivo);
-
 /*
+
     TPosicion pos_aux = l_primera(lista_ciudades);
     printf("Pos usuario: %f",ubicacion_usuario.x);
     printf("Pos usuario: %f\n",ubicacion_usuario.y);
@@ -69,9 +60,9 @@ int main(int argc , char * argv[]) {
     generar_cola(lista_ciudades,cola);
     TEntrada entr=cp_eliminar(cola);
     TCiudad ciu=(TCiudad)entr->valor;
-    printf("NOmbre 1: %s",ciu->nombre);
-*/
+    printf("Nombre 1: %s",ciu->nombre);
 
+*/
 
     while(operacion!=4){
         printf("Listado de operaciones: \n");
@@ -86,8 +77,13 @@ int main(int argc , char * argv[]) {
                 TColaCP cola=crear_cola_cp(&funcionAscendente);
                 generar_cola(lista_ciudades,cola);
                 printf("El listado ascendente de las ciudades es: \n");
-                mostrarCola(cola);
-                cp_destruir(cola);
+                TEntrada e;
+                TCiudad city;
+                cp_eliminar(cola);
+                cp_eliminar(cola);
+                mostrar_Cola(cola);
+                //mostrarCola(cola);
+                //cp_destruir(cola);
                 break;
             }
             case 2:{
@@ -132,14 +128,6 @@ int funcionAscendente(TEntrada t1,TEntrada t2){
     TPar *par2=(TPar *)t2->clave;
     dist_ciu1=distancia_ciudad_usuario(par1);
     dist_ciu2=distancia_ciudad_usuario(par2);
-     /*
-    TCiudad ciu1=(TCiudad)t1->valor;
-    TCiudad ciu2=(TCiudad)t2->valor;
-    printf("Nombre 1: %s  ",ciu1->nombre);
-    printf("Dist 1: %f\n",dist_ciu1);
-    printf("Nombre 2: %s  ",ciu2->nombre);
-    printf("Dist 2: %f  ",dist_ciu2);
-    */
     if(dist_ciu1<dist_ciu2){
         retorno=1;
     }
@@ -151,7 +139,6 @@ int funcionAscendente(TEntrada t1,TEntrada t2){
             retorno=0;
         }
     }
-   // printf("retorno %i\n",retorno);
     return retorno;
 }
 
@@ -290,12 +277,14 @@ void generar_cola(TLista lista_ciudades, TColaCP cola){
     // por cada ciudad de la lista la agrego a la cola
     while(pos != POS_NULA){
         clav=(TPar *)malloc(sizeof(struct par));
-        ciu = (TCiudad) pos->elemento; //preguntar por este casteo
+        ciu = (TCiudad) pos->elemento;
         clav->x=ciu->pos_x;
         clav->y=ciu->pos_y;
-        entr=(TEntrada)malloc((sizeof(struct entrada))); //cuando liberamos esta entrada?
+        entr=(TEntrada)malloc((sizeof(struct entrada)));
         entr->clave= clav;
         entr->valor= ciu;
+       // ciu=(TCiudad)entr->valor;
+       // printf("entrada: %s",ciu->nombre);
         cp_insertar(cola,entr);
         pos=l_siguiente(lista_ciudades,pos);
     }
@@ -307,9 +296,11 @@ void mostrarCola(TColaCP cola){
     TCiudad city;
     TEntrada entr;
     while(cp_size(cola) > 0){
+        //printf("cant: %i\n",cp_size(cola));
         entr=cp_eliminar(cola);
         city = (TCiudad)entr->valor;
         printf("%i. %s\n",i,city->nombre);
+        free(entr->clave);
         free(entr);
         i++;
     }
