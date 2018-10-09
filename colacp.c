@@ -1,5 +1,7 @@
 #include "colacp.h"
 #include <stdlib.h>
+#include <stdio.h>
+
 //estas son las declaraciones de las funciones privadas auxiliares
 void intercambiar(TNodo hijo,TNodo padre);
 void burbujeo(TColaCP cola,TNodo nodoAcomodar);
@@ -35,7 +37,7 @@ int cp_insertar(TColaCP cola,TEntrada entr){
                 nuevoNodo->hijo_derecho=NULL;
                 nuevoNodo->hijo_izquierdo=NULL;
                 cola->raiz=nuevoNodo;
-                cola->cantidad_elementos=cola->cantidad_elementos+1;
+                cola->cantidad_elementos=1;
             }
             else{
                 cola->cantidad_elementos=cola->cantidad_elementos+1;
@@ -77,7 +79,6 @@ TNodo buscar_nodo(TColaCP cola,int cant){
 
 
 void burbujeo(TColaCP cola,TNodo nodoAcomodar){
-
     while((cola->f(nodoAcomodar->entrada,nodoAcomodar->padre->entrada))==1){
         intercambiar(nodoAcomodar,nodoAcomodar->padre);
     }
@@ -91,7 +92,7 @@ void intercambiar(TNodo hijo,TNodo padre){
 
 
 TEntrada cp_eliminar(TColaCP cola){
-    TEntrada eliminar=ELE_NULO;
+    TEntrada eliminar=NULL;
     TNodo nuevaRaiz;
     if(cola==NULL){
         exit(CCP_NO_INI);
@@ -99,6 +100,7 @@ TEntrada cp_eliminar(TColaCP cola){
     else{
         if(cola->cantidad_elementos!=0){
             if(cola->cantidad_elementos==1){
+                eliminar=cola->raiz->entrada;
                 free(cola->raiz);
                 cola->raiz=NULL;
                 cola->cantidad_elementos=0;
