@@ -65,15 +65,15 @@ int main(int argc , char * argv[]) {
                 generar_cola(lista_ciudades,cola);
                 printf("El listado ascendentes de las ciudades es: \n");
                 mostrarCola(cola);
-                cp_destruir(cola); // LLAMAMOS A DESTRUIR O DIRECTAMENTE HACEMOS FREE(COLA) ?
-                break;              //PORQUE YA QUEDO LIBERADA LA MEMORIA DE TODOS LOS ELEMENTOS AL ELIMINARLOS.
+                cp_destruir(cola);
+                break;
             }
             case 2:{
                 TColaCP cola=crear_cola_cp(&funcionDescendente);
                 generar_cola(lista_ciudades,cola);
                 printf("El listado descendentes de las ciudades es: \n");
-                mostrarCola(cola);  // LLAMAMOS A DESTRUIR O DIRECTAMENTE HACEMOS FREE(COLA) ?
-                cp_destruir(cola); //PORQUE YA QUEDO LIBERADA LA MEMORIA DE TODOS LOS ELEMENTOS AL ELIMINARLOS.
+                mostrarCola(cola);
+                cp_destruir(cola);
                 break;
             }
             case 3:{
@@ -86,8 +86,7 @@ int main(int argc , char * argv[]) {
                 break;
             }
             case 4:{
-                //limpiar memoria
-                l_destruir(&lista_ciudades); // solo eso porque las colas se destruyen despues de usarlas en c/operacion no?
+                l_destruir(&lista_ciudades);
                 break;
             }
             default:{
