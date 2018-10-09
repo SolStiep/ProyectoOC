@@ -40,7 +40,7 @@
 1539044107 /home/alumno/Documentos/ProyectoOC/lista.h
 	"constantes.h"
 
-1539103399 source:/home/alumno/ProyectoOC/colacp.c
+1539111060 source:/home/alumno/ProyectoOC/colacp.c
 	"colacp.h"
 	<stdlib.h>
 	"ciudad.h"
@@ -93,7 +93,7 @@
 	"colacp.h"
 	"ciudad.h"
 
-1539103310 source:/home/alumno/ProyectoOC/planificador.c
+1539119325 source:/home/alumno/ProyectoOC/planificador.c
 	<stdio.h>
 	<stdlib.h>
 	"lista.h"

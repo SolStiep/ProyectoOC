@@ -117,13 +117,10 @@ TEntrada cp_eliminar(TColaCP cola){
                 cola->cantidad_elementos=0;
             }
             else{
-                nuevaRaiz=buscar_nodo(cola,cola->cantidad_elementos);
+                 nuevaRaiz=buscar_nodo(cola,cola->cantidad_elementos);
                 eliminar=cola->raiz->entrada;
-/*
-                TCiudad ciu=(TCiudad)nuevaRaiz->entrada->valor;
-                TPar *p=(TPar *)nuevaRaiz->entrada->clave;
-                printf("nombre: %s  ",ciu->nombre);
-                printf("clave: %f ",p->x);
+
+                cola->raiz->entrada = nuevaRaiz->entrada;
 
                 if(nuevaRaiz->padre->hijo_derecho==nuevaRaiz){
                     nuevaRaiz->padre->hijo_derecho=NULL;
@@ -131,19 +128,9 @@ TEntrada cp_eliminar(TColaCP cola){
                 else{
                     nuevaRaiz->padre->hijo_izquierdo=NULL;
                 }
-                nuevaRaiz->padre=NULL;
-                nuevaRaiz->hijo_derecho=cola->raiz->hijo_derecho;
-                nuevaRaiz->hijo_izquierdo=cola->raiz->hijo_izquierdo;
-*/
-                cola->raiz->entrada = nuevaRaiz->entrada;
-               // cola->raiz->hijo_derecho = NULL;
-                //cola->raiz->hijo_izquierdo = NULL;
                 nuevaRaiz->entrada=NULL;
-                nuevaRaiz->hijo_derecho=NULL;
-                nuevaRaiz->hijo_izquierdo=NULL;
                 free(nuevaRaiz);
 
-              //  cola->raiz=nuevaRaiz;
                 cola->cantidad_elementos=cola->cantidad_elementos-1;
                 acomodar(cola);
             }
@@ -200,8 +187,11 @@ int cp_destruir(TColaCP cola){
         return FALSE;
     }
     else{
-        cp_destruirAux(cola->raiz);
+        if(cola->raiz!=NULL){
+            cp_destruirAux(cola->raiz);
+        }
         free(cola);
+        cola = NULL;
     }
     return TRUE;
 }
@@ -221,6 +211,8 @@ void cp_destruirAux(TNodo r){
 }
 
 void pre(TColaCP cola , TNodo raiz);
+
+
 void mostrar_Cola(TColaCP cola){
     pre(cola , cola->raiz);
 }
