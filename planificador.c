@@ -51,12 +51,23 @@ int main(int argc , char * argv[]) {
 
     TLista lista_ciudades = generar_lista(archivo);
 
-    printf("Ubicacion usuario: %f\n",ubicacion_usuario.x);
-    printf("Ubicacion usuario: %f\n",ubicacion_usuario.y);
 
-    TCiudad ciudad =(TCiudad)lista_ciudades->elemento;
-    printf("x: %f\n",ciudad->pos_x);
-    printf("y: %f\n",ciudad->pos_y);
+    TPosicion pos_aux = l_primera(lista_ciudades);
+
+    while(pos_aux!=POS_NULA){
+        TCiudad city_aux = (TCiudad) pos_aux->elemento;
+        printf("x_city: %f \n", city_aux->pos_x);
+        printf("y_city: %f \n", city_aux->pos_y);
+        printf("name_city: %s \n", city_aux->nombre);
+
+        pos_aux = l_siguiente(lista_ciudades , pos_aux);
+    }
+
+
+
+
+
+
 
 
 
@@ -160,25 +171,26 @@ TLista generar_lista(FILE* arch){
     char c='a';
     int i=0 , l=0;
 
+    TPosicion pos = POS_NULA;
+
     if(fscanf(arch,"%[^\n]",linea) != EOF){ //consumimos la primer linea que es la ubicacion del usuario.
 
         fscanf(arch , "%c" , &c ); //consume el \n
         //procesamos la primer linea que es la ubicacion del usuario
 
-        while(linea[l]!='\0' && c!=';'){
-            c=linea[l];
-            num_real[i] = c;
+        while(linea[l]!='\0' && linea[l]!=';'){
+            num_real[i] = linea[l];
             l++;
             i++;
         }
-        num_real[i] = '0'; //para marcar el fin del numero.
+        l++; //avanzamos del ;
+        num_real[i] = '\0'; //para marcar el fin del numero.
         i=0;
 
         x = atof(num_real); //convertimos el string en real;
 
         while(linea[l]!='\0'){
-            c=linea[l];
-            num_real[i] = c;
+            num_real[i] = linea[l];
             l++;
             i++;
         }
@@ -196,43 +208,48 @@ TLista generar_lista(FILE* arch){
     while(fscanf(arch,"%[^\n]",linea) != EOF){ //consume una linea entera, lee hasta fin de archivo
 
         fscanf(arch , "%c" , &c ); //consume el \n
+
         l=0; //recorremos la linea desde el inicio
+        i=0;
 
-        while(linea[l]!='\0' && c!=';'){
-            c=linea[l];
-            nombre_ciudad[i] = c;
+        while(linea[l]!='\0' && linea[l]!=';'){
+            nombre_ciudad[i] = linea[l];
             l++;
             i++;
         }
+        nombre_ciudad[i] = '\0';
+        l++; //avanzamos del ;
         i=0;
 
-        while(linea[l]!='\0' && c!=';'){
-            c=linea[l];
-            num_real[i] = c;
+        while(linea[l]!='\0' && linea[l]!=';'){
+            num_real[i] = linea[l];
             l++;
             i++;
+
         }
-        num_real[i] = '0'; //para marcar el fin del numero.
+        num_real[i] ='\0'; //para marcar el fin del numero.
+        l++; //avanzamos del ;
         i=0;
+        c='a'; //para limpiar el ;
 
         x = atof(num_real); //convertimos el string en real;
 
         while(linea[l]!='\0'){
-            c=linea[l];
-            num_real[i] = c;
+            num_real[i] = linea[l];
             l++;
             i++;
         }
         num_real[i] = '\0';
         i=0;
-
+        l=0; //terminamos de recorrer la linea
         y = atof(num_real);
 
 
         //ahora construimos la ciudad y la insertamos en la lista
 
         TCiudad city = crear_ciudad(x,y,nombre_ciudad);
-        TPosicion pos = POS_NULA;
+
+
 
         if(pos == POS_NULA){
             l_insertar(&lista_ciudades , POS_NULA , city);
@@ -242,7 +259,6 @@ TLista generar_lista(FILE* arch){
             l_insertar(&lista_ciudades , pos , city);
             pos = l_siguiente(lista_ciudades , pos);
         }
-
 
     }
 
