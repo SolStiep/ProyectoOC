@@ -51,6 +51,15 @@ int main(int argc , char * argv[]) {
 
     TLista lista_ciudades = generar_lista(archivo);
 
+    printf("Ubicacion usuario: %f\n",ubicacion_usuario.x);
+    printf("Ubicacion usuario: %f\n",ubicacion_usuario.y);
+
+    TCiudad ciudad =(TCiudad)lista_ciudades->elemento;
+    printf("x: %f\n",ciudad->pos_x);
+    printf("y: %f\n",ciudad->pos_y);
+
+
+
     while(operacion!=4){
         printf("Listado de operaciones: \n");
         printf("1: Mostrar ascendente.\n");
@@ -63,7 +72,7 @@ int main(int argc , char * argv[]) {
             case 1:{
                 TColaCP cola=crear_cola_cp(&funcionAscendente);
                 generar_cola(lista_ciudades,cola);
-                printf("El listado ascendentes de las ciudades es: \n");
+                printf("El listado ascendente de las ciudades es: \n");
                 mostrarCola(cola);
                 cp_destruir(cola);
                 break;
@@ -71,7 +80,7 @@ int main(int argc , char * argv[]) {
             case 2:{
                 TColaCP cola=crear_cola_cp(&funcionDescendente);
                 generar_cola(lista_ciudades,cola);
-                printf("El listado descendentes de las ciudades es: \n");
+                printf("El listado descendente de las ciudades es: \n");
                 mostrarCola(cola);
                 cp_destruir(cola);
                 break;
@@ -157,6 +166,7 @@ TLista generar_lista(FILE* arch){
         //procesamos la primer linea que es la ubicacion del usuario
 
         while(linea[l]!='\0' && c!=';'){
+            c=linea[l];
             num_real[i] = c;
             l++;
             i++;
@@ -167,6 +177,7 @@ TLista generar_lista(FILE* arch){
         x = atof(num_real); //convertimos el string en real;
 
         while(linea[l]!='\0'){
+            c=linea[l];
             num_real[i] = c;
             l++;
             i++;
@@ -188,6 +199,7 @@ TLista generar_lista(FILE* arch){
         l=0; //recorremos la linea desde el inicio
 
         while(linea[l]!='\0' && c!=';'){
+            c=linea[l];
             nombre_ciudad[i] = c;
             l++;
             i++;
@@ -195,6 +207,7 @@ TLista generar_lista(FILE* arch){
         i=0;
 
         while(linea[l]!='\0' && c!=';'){
+            c=linea[l];
             num_real[i] = c;
             l++;
             i++;
@@ -205,6 +218,7 @@ TLista generar_lista(FILE* arch){
         x = atof(num_real); //convertimos el string en real;
 
         while(linea[l]!='\0'){
+            c=linea[l];
             num_real[i] = c;
             l++;
             i++;
@@ -262,9 +276,9 @@ void mostrarCola(TColaCP cola){
     TCiudad city;
     TEntrada entr;
     while(cp_size(cola) > 0){
-        entr=cp_eliminar(cola)->valor;
-        city = (TCiudad) entr->valor;
-        printf("%i. %s\n",i+1,city->nombre);
+        entr=cp_eliminar(cola);
+        city = (TCiudad)entr->valor;
+        printf("%i. %s\n",i,city->nombre);
         free(entr);
         i++;
     }
